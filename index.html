@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locket - Partage tes moments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Login/Register Screen */
+        .auth-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .auth-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .auth-logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            outline: none;
+            color: #333;
+        }
+
+        .form-input:focus {
+            background: white;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
+        }
+
+        .auth-toggle {
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .auth-toggle button {
+            background: none;
+            border: none;
+            color: white;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .nav-tab {
+            flex: 1;
+            background: none;
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-tab.active {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        /* Camera Section */
+        .camera-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .camera-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        #camera {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(45deg, #333, #555);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .camera-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+            font-size: 1rem;
+            padding: 15px 30px;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+        }
+
+        /* Friends Section */
+        .friends-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .add-friend-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .add-friend-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            outline: none;
+        }
+
+        .friends-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .friend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .friend-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .friend-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .friend-status {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .friend-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 15px;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Feed Section */
+        .feed-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            flex-grow: 1;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .photo-card:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .photo-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .photo-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .photo-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .camera-container {
+                height: 250px;
+            }
+
+            .add-friend-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="auth-screen">
+        <div class="auth-card">
+            <div class="auth-logo">📸</div>
+            <div class="auth-title" id="auth-title">Créer un compte</div>
+            
+            <form id="auth-form">
+                <div class="form-group">
+                    <label class="form-label">Nom d'utilisateur</label>
+                    <input type="text" id="auth-username" class="form-input" required maxlength="20">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="auth-email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" id="auth-password" class="form-input" required minlength="6">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                    <span id="auth-btn-text">S'inscrire</span>
+                </button>
+            </form>
+            
+            <div class="auth-toggle">
+                <span id="auth-toggle-text">Déjà un compte ?</span>
+                <button type="button" id="auth-toggle-btn">Se connecter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="container hidden">
+        <div class="header">
+            <div class="header-left">
+                <div class="logo">📸 Locket</div>
+                <div class="user-info">
+                    <div id="current-user">Bonjour !</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn" id="logout-btn" title="Déconnexion">🚪</button>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="camera">📷 Caméra</button>
+            <button class="nav-tab" data-tab="friends">👥 Amis</button>
+            <button class="nav-tab" data-tab="feed">📱 Feed</button>
+        </div>
+
+        <!-- Camera Tab -->
+        <div id="tab-camera" class="tab-content">
+            <div class="camera-section">
+                <div class="camera-container">
+                    <video id="camera" style="display: none;" autoplay playsinline></video>
+                    <div id="camera-placeholder" class="camera-placeholder">
+                        <div>
+                            <div style="font-size: 3rem; margin-bottom: 10px;">📷</div>
+                            <div>Clique sur "Activer la caméra" pour commencer</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-controls">
+                    <button id="start-camera" class="btn">Activer la caméra</button>
+                    <button id="switch-camera" class="btn" style="display: none;">Retourner</button>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button id="take-photo" class="btn btn-primary" style="display: none;">Prendre une photo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends Tab -->
+        <div id="tab-friends" class="tab-content hidden">
+            <div class="friends-section">
+                <div class="section-title">👥 Mes amis</div>
+                
+                <div class="add-friend-form">
+                    <input type="text" id="add-friend-input" class="add-friend-input" placeholder="Nom d'utilisateur de ton ami...">
+                    <button id="add-friend-btn" class="btn">Ajouter</button>
+                </div>
+                
+                <div id="friends-list" class="friends-list">
+                    <!-- Les amis apparaîtront ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Feed Tab -->
+        <div id="tab-feed" class="tab-content hidden">
+            <div class="feed-section">
+                <div class="section-title">📱 Feed des amis</div>
+                <div id="photo-feed" class="photo-grid">
+                    <!-- Les photos apparaîtront ici -->
+                </div>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div id="total-photos" class="stat-number">0</div>
+                        <div class="stat-label">Photos</div>
+                    </div>
+                    <div class="stat">
+                        <div id="friend-count" class="stat-number">0</div>
+                        <div class="stat-label">Amis</div>
+                    </div>
+                    <div class="stat">
+                        <div id="today-photos" class="stat-number">0</div>
+                        <div class="stat-label">Aujourd'hui</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+        class LocketApp {
+            constructor() {
+                this.currentUser = null;
+                this.users = JSON.parse(localStorage.getItem('locket-users') || '{}');
+                this.friends = JSON.parse(localStorage.getItem('locket-friends') || '{}');
+                this.photos = JSON.parse(localStorage.getItem('locket-photos') || '[]');
+                this.currentStream = null;
+                this.currentCamera = 'user';
+                this.isLogin = false;
+                this.currentTab = 'camera';
+                
+                this.initializeElements();
+                this.setupEventListeners();
+                this.checkAuth();
+            }
+
+            initializeElements() {
+                // Auth elements
+                this.authScreen = document.getElementById('auth-screen');
+                this.mainApp = document.getElementById('main-app');
+                this.authForm = document.getElementById('auth-form');
+                this.authTitle = document.getElementById('auth-title');
+                this.authBtnText = document.getElementById('auth-btn-text');
+                this.authToggleText = document.getElementById('auth-toggle-text');
+                this.authToggleBtn = document.getElementById('auth-toggle-btn');
+                this.authUsername = document.getElementById('auth-username');
+                this.authEmail = document.getElementById('auth-email');
+                this.authPassword = document.getElementById('auth-password');
+
+                // Main app elements
+                this.currentUserEl = document.getElementById('current-user');
+                this.logoutBtn = document.getElementById('logout-btn');
+                this.camera = document.getElementById('camera');
+                this.cameraPlaceholder = document.getElementById('camera-placeholder');
+                this.startCameraBtn = document.getElementById('start-camera');
+                this.switchCameraBtn = document.getElementById('switch-camera');
+                this.takePhotoBtn = document.getElementById('take-photo');
+                this.photoFeed = document.getElementById('photo-feed');
+                this.notification = document.getElementById('notification');
+                this.addFriendInput = document.getElementById('add-friend-input');
+                this.addFriendBtn = document.getElementById('add-friend-btn');
+                this.friendsList = document.getElementById('friends-list');
+
+                // Navigation
+                this.navTabs = document.querySelectorAll('.nav-tab');
+                this.tabContents = document.querySelectorAll('.tab-content');
+            }
+
+            setupEventListeners() {
+                // Auth
+                this.authForm.addEventListener('submit', (e) => this.handleAuth(e));
+                this.authToggleBtn.addEventListener('click', () => this.toggleAuthMode());
+                this.logoutBtn.addEventListener('click', () => this.logout());
+
+                // Navigation
+                this.navTabs.forEach(tab => {
+                    tab.addEventListener('click', () => this.switchTab(tab.dataset.tab));
+                });
+
+                // Camera
+                this.startCameraBtn.addEventListener('click', () => this.startCamera());
+                this.switchCameraBtn.addEventListener('click', () => this.switchCamera());
+                this.takePhotoBtn.addEventListener('click', () => this.takePhoto());
+
+                // Friends
+                this.addFriendBtn.addEventListener('click', () => this.addFriend());
+                this.addFriendInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.addFriend();
+                });
+            }
+
+            checkAuth() {
+                const savedUser = localStorage.getItem('locket-current-user');
+                if (savedUser) {
+                    this.currentUser = JSON.parse(savedUser);
+                    this.showMainApp();
+                } else {
+                    this.showAuthScreen();
+                }
+            }
+
+            toggleAuthMode() {
+                this.isLogin = !this.isLogin;
+                if (this.isLogin) {
+                    this.authTitle.textContent = 'Se connecter';
+                    this.authBtnText.textContent = 'Se connecter';
+                    this.authToggleText.textContent = 'Pas de compte ?';
+                    this.authToggleBtn.textContent = 'S\'inscrire';
+                    this.authEmail.style.display = 'none';
+                    this.authEmail.previousElementSibling.style.display = 'none';
+                } else {
+                    this.authTitle.textContent = 'Créer un compte';
+                    this.authBtnText.textContent = 'S\'inscrire';
+                    this.authToggleText.textContent = 'Déjà un compte ?';
+                    this.authToggleBtn.textContent = 'Se connecter';
+                    this.authEmail.style.display = 'block';
+                    this.authEmail.previousElementSibling.style.display = 'block';
+                }
+            }
+
+            handleAuth(e) {
+                e.preventDefault();
+                const username = this.authUsername.value.trim();
+                const email = this.authEmail.value.trim();
+                const password = this.authPassword.value;
+
+                if (this.isLogin) {
+                    // Login
+                    const user = this.users[username];
+                    if (user && user.password === password) {
+                        this.currentUser = { username: user.username, email: user.email };
+                        localStorage.setItem('locket-current-user', JSON.stringify(this.currentUser));
+                        this.showMainApp();
+                        this.showNotification(`Bienvenue ${username}! 👋`);
+                    } else {
+                        this.showNotification('Nom d\'utilisateur ou mot de passe incorrect 😕', 'error');
+                    }
+                } else {
+                    // Register
+                    if (this.users[username]) {
+                        this.showNotification('Ce nom d\'utilisateur existe déjà 😕', 'error');
+                        return;
+                    }
+
+                    this.users[username] = { username, email, password };
+                    localStorage.setItem('locket-users', JSON.stringify(this.users));
+                    
+                    this.currentUser = { username, email };
+                    localStorage.setItem('locket-current-user', JSON.stringify(this.currentUser));
+                    
+                    // Initialiser la liste d'amis pour ce nouvel utilisateur
+                    if (!this.friends[username]) {
+                        this.friends[username] = [];
+                        localStorage.setItem('locket-friends', JSON.stringify(this.friends));
+                    }
+                    
+                    this.showMainApp();
+                    this.showNotification(`Compte créé avec succès! Bienvenue ${username}! 🎉`);
+                }
+            }
+
+            logout() {
+                localStorage.removeItem('locket-current-user');
+                this.currentUser = null;
+                if (this.currentStream) {
+                    this.currentStream.getTracks().forEach(track => track.stop());
+                }
+                this.showAuthScreen();
+                this.showNotification('À bientôt! 👋');
+            }
+
+            showAuthScreen() {
+                this.authScreen.classList.remove('hidden');
+                this.mainApp.classList.add('hidden');
+                this.authForm.reset();
+            }
+
+            showMainApp() {
+                this.authScreen.classList.add('hidden');
+                this.mainApp.classList.remove('hidden');
+                this.currentUserEl.textContent = `Bonjour ${this.currentUser.username}!`;
+                this.renderFriends();
+                this.renderFeed();
+                this.updateStats();
+            }
+
+            switchTab(tabName) {
+                this.currentTab = tabName;
+                
+                // Update navigation
+                this.navTabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.tab === tabName);
+                });
+                
+                // Update content
+                this.tabContents.forEach(content => {
+                    content.classList.toggle('hidden', !content.id.includes(tabName));
+                });
+            }
+
+            addFriend() {
+                const friendUsername = this.addFriendInput.value.trim();
+                
+                if (!friendUsername) {
+                    this.showNotification('Entre le nom d\'utilisateur de ton ami 😊', 'error');
+                    return;
+                }
+                
+                if (friendUsername === this.currentUser.username) {
+                    this.showNotification('Tu ne peux pas t\'ajouter toi-même 😄', 'error');
+                    return;
+                }
+                
+                if (!this.users[friendUsername]) {
+                    this.showNotification('Cet utilisateur n\'existe pas 😕', 'error');
+                    return;
+                }
+                
+                if (!this.friends[this.currentUser.username]) {
+                    this.friends[this.currentUser.username] = [];
+                }
+                
+                if (this.friends[this.currentUser.username].includes(friendUsername)) {
+                    this.showNotification('Tu es déjà ami avec cette personne! 😊', 'error');
+                    return;
+                }
+                
+                this.friends[this.currentUser.username].push(friendUsername);
+                localStorage.setItem('locket-friends', JSON.stringify(this.friends));
+                
+                this.addFriendInput.value = '';
+                this.renderFriends();
+                this.updateStats();
+                this.showNotification(`${friendUsername} ajouté à tes amis! 🎉`);
+            }
+
+            removeFriend(friendUsername) {
+                if (this.friends[this.currentUser.username]) {
+                    this.friends[this.currentUser.username] = this.friends[this.currentUser.username]
+                        .filter(friend => friend !== friendUsername);
+                    localStorage.setItem('locket-friends', JSON.stringify(this.friends));
+                    this.renderFriends();
+                    this.updateStats();
+                    this.showNotification(`${friendUsername} retiré de tes amis 👋`);
+                }
+            }
+
+            renderFriends() {
+                const userFriends = this.friends[this.currentUser.username] || [];
+                
+                if (userFriends.length === 0) {
+                    this.friendsList.innerHTML = `
+                        <div style="text-align: center; padding: 40px; opacity: 0.7;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">👥</div>
+                            <div>Aucun ami pour le moment...</div>
+                            <div style="font-size: 0.9rem; margin-top: 10px;">Ajoute tes premiers amis!</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.friendsList.innerHTML = userFriends.map(friend => {
+                    const user = this.users[friend];
+                    const avatar = friend.charAt(0).toUpperCase();
+                    
+                    return `
+                        <div class="friend-item">
+                            <div class="friend-info">
+                                <div class="friend-avatar">${avatar}</div>
+                                <div>
+                                    <div style="font-weight: 600;">${friend}</div>
+                                    <div style="font-size: 0.8rem; opacity: 0.7;">${user ? user.email : 'Email non disponible'}</div>
+                                </div>
+                                <div class="friend-status"></div>
+                            </div>
+                            <div class="friend-actions">
+                                <button class="btn btn-small btn-danger" onclick="app.removeFriend('${friend}')">
+                                    Retirer
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            async startCamera() {
+                try {
+                    if (this.currentStream) {
+                        this.currentStream.getTracks().forEach(track => track.stop());
+                    }
+
+                    const constraints = {
+                        video: {
+                            facingMode: this.currentCamera,
+                            width: { ideal: 400 },
+                            height: { ideal: 300 }
+                        }
+                    };
+
+                    this.currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    this.camera.srcObject = this.currentStream;
+                    
+                    this.camera.style.display = 'block';
+                    this.cameraPlaceholder.style.display = 'none';
+                    this.startCameraBtn.style.display = 'none';
+                    this.switchCameraBtn.style.display = 'inline-block';
+                    this.takePhotoBtn.style.display = 'inline-block';
+                    
+                } catch (error) {
+                    console.error('Erreur caméra:', error);
+                    this.showNotification('Impossible d\'accéder à la caméra 😕', 'error');
+                }
+            }
+
+            async switchCamera() {
+                this.currentCamera = this.currentCamera === 'user' ? 'environment' : 'user';
+                await this.startCamera();
+                this.showNotification(`Caméra ${this.currentCamera === 'user' ? 'avant' : 'arrière'} activée! 📱`);
+            }
+
+            takePhoto() {
+                if (!this.currentStream) {
+                    this.showNotification('Active d\'abord la caméra! 📷', 'error');
+                    return;
+                }
+
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = this.camera.videoWidth;
+                canvas.height = this.camera.videoHeight;
+                
+                context.drawImage(this.camera, 0, 0);
+                const photoData = canvas.toDataURL('image/jpeg', 0.8);
+
+                const photo = {
+                    id: Date.now(),
+                    data: photoData,
+                    author: this.currentUser.username,
+                    timestamp: new Date().toISOString(),
+                    likes: 0,
+                    visibleTo: this.friends[this.currentUser.username] || []
+                };
+
+                this.photos.unshift(photo);
+                
+                // Garder seulement les 100 dernières photos
+                if (this.photos.length > 100) {
+                    this.photos = this.photos.slice(0, 100);
+                }
+                
+                localStorage.setItem('locket-photos', JSON.stringify(this.photos));
+                
+                this.renderFeed();
+                this.updateStats();
+                this.showNotification(`Photo partagée avec tes amis! 🎉`);
+            }
+
+            renderFeed() {
+                const userFriends = this.friends[this.currentUser.username] || [];
+                
+                // Filtrer les photos visibles: photos de l'utilisateur ou photos de ses amis
+                const visiblePhotos = this.photos.filter(photo => {
+                    return photo.author === this.currentUser.username || 
+                           (userFriends.includes(photo.author) && photo.visibleTo.includes(this.currentUser.username));
+                });
+                
+                if (visiblePhotos.length === 0) {
+                    this.photoFeed.innerHTML = `
+                        <div style="text-align: center; padding: 40px; opacity: 0.7; grid-column: 1 / -1;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">📸</div>
+                            <div>Aucune photo pour le moment...</div>
+                            <div style="font-size: 0.9rem; margin-top: 10px;">Prends la première photo ou ajoute des amis!</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.photoFeed.innerHTML = visiblePhotos.map(photo => {
+                    const timeAgo = this.getTimeAgo(new Date(photo.timestamp));
+                    const isOwn = photo.author === this.currentUser.username;
+                    
+                    return `
+                        <div class="photo-card">
+                            <img src="${photo.data}" alt="Photo de ${photo.author}">
+                            <div class="photo-info">
+                                <div class="photo-author">${photo.author} ${isOwn ? '(Toi)' : ''}</div>
+                                <div class="photo-time">${timeAgo} • ❤️ ${photo.likes}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            updateStats() {
+                const userFriends = this.friends[this.currentUser.username] || [];
+                const userPhotos = this.photos.filter(photo => photo.author === this.currentUser.username);
+                
+                const today = new Date().toDateString();
+                const todayPhotos = userPhotos.filter(p => 
+                    new Date(p.timestamp).toDateString() === today
+                ).length;
+
+                document.getElementById('total-photos').textContent = userPhotos.length;
+                document.getElementById('friend-count').textContent = userFriends.length;
+                document.getElementById('today-photos').textContent = todayPhotos;
+            }
+
+            getTimeAgo(date) {
+                const now = new Date();
+                const diff = now - date;
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+
+                if (minutes < 1) return 'À l\'instant';
+                if (minutes < 60) return `${minutes}min`;
+                if (hours < 24) return `${hours}h`;
+                return `${days}j`;
+            }
+
+            showNotification(message, type = 'success') {
+                this.notification.textContent = message;
+                this.notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+                if (type === 'error') {
+                    this.notification.style.background = '#f44336';
+                } else {
+                    this.notification.style.background = '#4CAF50';
+                }
+                
+                this.notification.classList.add('show');
+                
+                setTimeout(() => {
+                    this.notification.classList.remove('show');
+                }, 3000);
+            }
+
+            generateSampleData() {
+                // Créer quelques utilisateurs d'exemple s'ils n'existent pas
+                if (Object.keys(this.users).length <= 1) {
+                    const sampleUsers = [
+                        { username: 'Sarah', email: 'sarah@example.com', password: '123456' },
+                        { username: 'Alex', email: 'alex@example.com', password: '123456' },
+                        { username: 'Marie', email: 'marie@example.com', password: '123456' }
+                    ];
+
+                    sampleUsers.forEach(user => {
+                        if (!this.users[user.username]) {
+                            this.users[user.username] = user;
+                            this.friends[user.username] = [];
+                        }
+                    });
+
+                    localStorage.setItem('locket-users', JSON.stringify(this.users));
+                    localStorage.setItem('locket-friends', JSON.stringify(this.friends));
+                }
+
+                // Ajouter quelques photos d'exemple si c'est vide
+                if (this.photos.length === 0) {
+                    const samplePhotos = [
+                        {
+                            id: Date.now() - 3600000,
+                            data: this.createSampleImage('🌅', '#ff9a9e'),
+                            author: 'Sarah',
+                            timestamp: new Date(Date.now() - 3600000).toISOString(),
+                            likes: 12,
+                            visibleTo: ['Alex', 'Marie']
+                        },
+                        {
+                            id: Date.now() - 7200000,
+                            data: this.createSampleImage('☕', '#a8e6cf'),
+                            author: 'Alex',
+                            timestamp: new Date(Date.now() - 7200000).toISOString(),
+                            likes: 8,
+                            visibleTo: ['Sarah', 'Marie']
+                        },
+                        {
+                            id: Date.now() - 10800000,
+                            data: this.createSampleImage('🎨', '#ffd3a5'),
+                            author: 'Marie',
+                            timestamp: new Date(Date.now() - 10800000).toISOString(),
+                            likes: 15,
+                            visibleTo: ['Sarah', 'Alex']
+                        }
+                    ];
+
+                    this.photos = samplePhotos;
+                    localStorage.setItem('locket-photos', JSON.stringify(this.photos));
+                }
+            }
+
+            createSampleImage(emoji, color) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 300;
+                canvas.height = 200;
+                const ctx = canvas.getContext('2d');
+                
+                // Gradient background
+                const gradient = ctx.createLinearGradient(0, 0, 300, 200);
+                gradient.addColorStop(0, color);
+                gradient.addColorStop(1, color + '80');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 300, 200);
+                
+                // Emoji
+                ctx.font = '60px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(emoji, 150, 120);
+                
+                return canvas.toDataURL('image/jpeg', 0.8);
+            }
+        }
+
+        // Initialiser l'app quand la page est chargée
+        let app;
+        document.addEventListener('DOMContentLoaded', () => {
+            app = new LocketApp();
+            app.generateSampleData();
+        });
+    </script>
+</body>
+</html>
