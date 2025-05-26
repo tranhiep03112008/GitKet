@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locket - Partage tes moments</title>
+    <title>Gitket - Partage tes moments</title>
     <style>
         * {
             margin: 0;
@@ -450,11 +450,11 @@
     <div id="auth-screen" class="auth-screen">
         <div class="auth-card">
             <div class="auth-logo">📸</div>
-            <div class="auth-title" id="auth-title">Créer un compte</div>
+            <div class="auth-title" id="auth-title">Tạo Tài Khoản Cho Bạn😘</div>
             
             <form id="auth-form">
                 <div class="form-group">
-                    <label class="form-label">Nom d'utilisateur</label>
+                    <label class="form-label">Tên Người Dùng</label>
                     <input type="text" id="auth-username" class="form-input" required maxlength="20">
                 </div>
                 
@@ -464,18 +464,18 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Mot de passe</label>
+                    <label class="form-label">Mật Khẩu😯</label>
                     <input type="password" id="auth-password" class="form-input" required minlength="6">
                 </div>
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                    <span id="auth-btn-text">S'inscrire</span>
+                    <span id="auth-btn-text">Đăng Ký</span>
                 </button>
             </form>
             
             <div class="auth-toggle">
-                <span id="auth-toggle-text">Déjà un compte ?</span>
-                <button type="button" id="auth-toggle-btn">Se connecter</button>
+                <span id="auth-toggle-text">Bạn đã có tài khoản?</span>
+                <button type="button" id="auth-toggle-btn">Đăng Nhập</button>
             </div>
         </div>
     </div>
@@ -484,9 +484,9 @@
     <div id="main-app" class="container hidden">
         <div class="header">
             <div class="header-left">
-                <div class="logo">📸 Locket</div>
+                <div class="logo">📸 Gitket</div>
                 <div class="user-info">
-                    <div id="current-user">Bonjour !</div>
+                    <div id="current-user">Hello My Fen!</div>
                 </div>
             </div>
             <div class="header-right">
@@ -495,9 +495,9 @@
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab active" data-tab="camera">📷 Caméra</button>
-            <button class="nav-tab" data-tab="friends">👥 Amis</button>
-            <button class="nav-tab" data-tab="feed">📱 Feed</button>
+            <button class="nav-tab active" data-tab="camera">📷 Camera</button>
+            <button class="nav-tab" data-tab="friends">👥 Bạn Boè</button>
+            <button class="nav-tab" data-tab="feed">📱 Đã Lưu</button>
         </div>
 
         <!-- Camera Tab -->
@@ -508,18 +508,18 @@
                     <div id="camera-placeholder" class="camera-placeholder">
                         <div>
                             <div style="font-size: 3rem; margin-bottom: 10px;">📷</div>
-                            <div>Clique sur "Activer la caméra" pour commencer</div>
+                            <div>Nhấp vào"Git" để chụp</div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="camera-controls">
-                    <button id="start-camera" class="btn">Activer la caméra</button>
-                    <button id="switch-camera" class="btn" style="display: none;">Retourner</button>
+                    <button id="start-camera" class="btn">Git</button>
+                    <button id="switch-camera" class="btn" style="display: none;">Trở lại</button>
                 </div>
                 
                 <div style="text-align: center;">
-                    <button id="take-photo" class="btn btn-primary" style="display: none;">Prendre une photo</button>
+                    <button id="take-photo" class="btn btn-primary" style="display: none;">Chụp ảnh</button>
                 </div>
             </div>
         </div>
@@ -527,11 +527,11 @@
         <!-- Friends Tab -->
         <div id="tab-friends" class="tab-content hidden">
             <div class="friends-section">
-                <div class="section-title">👥 Mes amis</div>
+                <div class="section-title">👥 Bạn Bè</div>
                 
                 <div class="add-friend-form">
-                    <input type="text" id="add-friend-input" class="add-friend-input" placeholder="Nom d'utilisateur de ton ami...">
-                    <button id="add-friend-btn" class="btn">Ajouter</button>
+                    <input type="text" id="add-friend-input" class="add-friend-input" placeholder="Tên người dùng...">
+                    <button id="add-friend-btn" class="btn">Thêm vào</button>
                 </div>
                 
                 <div id="friends-list" class="friends-list">
@@ -543,7 +543,7 @@
         <!-- Feed Tab -->
         <div id="tab-feed" class="tab-content hidden">
             <div class="feed-section">
-                <div class="section-title">📱 Feed des amis</div>
+                <div class="section-title">📱 Lịch sử của bạn</div>
                 <div id="photo-feed" class="photo-grid">
                     <!-- Les photos apparaîtront ici -->
                 </div>
@@ -551,15 +551,15 @@
                 <div class="stats">
                     <div class="stat">
                         <div id="total-photos" class="stat-number">0</div>
-                        <div class="stat-label">Photos</div>
+                        <div class="stat-label">Ảnh</div>
                     </div>
                     <div class="stat">
                         <div id="friend-count" class="stat-number">0</div>
-                        <div class="stat-label">Amis</div>
+                        <div class="stat-label">Bạn bè</div>
                     </div>
                     <div class="stat">
                         <div id="today-photos" class="stat-number">0</div>
-                        <div class="stat-label">Aujourd'hui</div>
+                        <div class="stat-label">Hôm nay</div>
                     </div>
                 </div>
             </div>
@@ -682,14 +682,14 @@
                         this.currentUser = { username: user.username, email: user.email };
                         localStorage.setItem('locket-current-user', JSON.stringify(this.currentUser));
                         this.showMainApp();
-                        this.showNotification(`Bienvenue ${username}! 👋`);
+                        this.showNotification(`Chào mừng ${username}! 👋`);
                     } else {
-                        this.showNotification('Nom d\'utilisateur ou mot de passe incorrect 😕', 'error');
+                        this.showNotification('Tên người dùng hoặc mật khẩu không đúng 😕', 'lỗi');
                     }
                 } else {
                     // Register
                     if (this.users[username]) {
-                        this.showNotification('Ce nom d\'utilisateur existe déjà 😕', 'error');
+                        this.showNotification('Tên người dùng này đã tồn tại 😕', 'lỗi');
                         return;
                     }
 
@@ -706,7 +706,7 @@
                     }
                     
                     this.showMainApp();
-                    this.showNotification(`Compte créé avec succès! Bienvenue ${username}! 🎉`);
+                    this.showNotification(`Tài khoản đã được tạo thành công! Chào mừng ${username}! 🎉`);
                 }
             }
 
@@ -717,7 +717,7 @@
                     this.currentStream.getTracks().forEach(track => track.stop());
                 }
                 this.showAuthScreen();
-                this.showNotification('À bientôt! 👋');
+                this.showNotification('Hẹn gặp lại! 👋');
             }
 
             showAuthScreen() {
@@ -753,17 +753,17 @@
                 const friendUsername = this.addFriendInput.value.trim();
                 
                 if (!friendUsername) {
-                    this.showNotification('Entre le nom d\'utilisateur de ton ami 😊', 'error');
+                    this.showNotification('Nhập tên người dùng của bạn 😊', 'lỗi');
                     return;
                 }
                 
                 if (friendUsername === this.currentUser.username) {
-                    this.showNotification('Tu ne peux pas t\'ajouter toi-même 😄', 'error');
+                    this.showNotification('Bạn không thể thêm chính mình 😄', 'lỗi');
                     return;
                 }
                 
                 if (!this.users[friendUsername]) {
-                    this.showNotification('Cet utilisateur n\'existe pas 😕', 'error');
+                    this.showNotification('Người dùng này không tồn tại 😕', 'lỗi');
                     return;
                 }
                 
@@ -772,7 +772,7 @@
                 }
                 
                 if (this.friends[this.currentUser.username].includes(friendUsername)) {
-                    this.showNotification('Tu es déjà ami avec cette personne! 😊', 'error');
+                    this.showNotification('Bạn đã là bạn với người này rồi! 😊', 'lỗi');
                     return;
                 }
                 
@@ -782,7 +782,7 @@
                 this.addFriendInput.value = '';
                 this.renderFriends();
                 this.updateStats();
-                this.showNotification(`${friendUsername} ajouté à tes amis! 🎉`);
+                this.showNotification(`${friendUsername} Đã thêm vào danh sách bạn bè của bạn! 🎉`);
             }
 
             removeFriend(friendUsername) {
@@ -792,7 +792,7 @@
                     localStorage.setItem('locket-friends', JSON.stringify(this.friends));
                     this.renderFriends();
                     this.updateStats();
-                    this.showNotification(`${friendUsername} retiré de tes amis 👋`);
+                    this.showNotification(`${friendUsername} Đã xóa khỏi bạn bè của bạn 👋`);
                 }
             }
 
@@ -803,8 +803,8 @@
                     this.friendsList.innerHTML = `
                         <div style="text-align: center; padding: 40px; opacity: 0.7;">
                             <div style="font-size: 3rem; margin-bottom: 15px;">👥</div>
-                            <div>Aucun ami pour le moment...</div>
-                            <div style="font-size: 0.9rem; margin-top: 10px;">Ajoute tes premiers amis!</div>
+                            <div>Chưa có bạn bè...</div>
+                            <div style="font-size: 0.9rem; margin-top: 10px;">Thêm những người bạn đầu tiên của bạn!</div>
                         </div>
                     `;
                     return;
@@ -820,7 +820,7 @@
                                 <div class="friend-avatar">${avatar}</div>
                                 <div>
                                     <div style="font-weight: 600;">${friend}</div>
-                                    <div style="font-size: 0.8rem; opacity: 0.7;">${user ? user.email : 'Email non disponible'}</div>
+                                    <div style="font-size: 0.8rem; opacity: 0.7;">${user ? user.email : 'Email không có sẵn'}</div>
                                 </div>
                                 <div class="friend-status"></div>
                             </div>
@@ -858,20 +858,20 @@
                     this.takePhotoBtn.style.display = 'inline-block';
                     
                 } catch (error) {
-                    console.error('Erreur caméra:', error);
-                    this.showNotification('Impossible d\'accéder à la caméra 😕', 'error');
+                    console.error('Lỗi máy ảnh:', lỗi);
+                    this.showNotification('Không thể truy cập vào máy ảnh 😕', 'lỗi');
                 }
             }
 
             async switchCamera() {
-                this.currentCamera = this.currentCamera === 'user' ? 'environment' : 'user';
+                this.currentCamera = this.currentCamera === 'Người dùng' ? 'Môi trường' : 'Người dùng';
                 await this.startCamera();
-                this.showNotification(`Caméra ${this.currentCamera === 'user' ? 'avant' : 'arrière'} activée! 📱`);
+                this.showNotification(`Camera ${this.currentCamera === 'Người dùng' ? 'Cam trước' : 'Cam sau'} Kích hoạt! 📱`);
             }
 
             takePhoto() {
                 if (!this.currentStream) {
-                    this.showNotification('Active d\'abord la caméra! 📷', 'error');
+                    this.showNotification('Trước tiên hãy kích hoạt camera! 📷', 'lỗi');
                     return;
                 }
 
@@ -903,7 +903,7 @@
                 
                 this.renderFeed();
                 this.updateStats();
-                this.showNotification(`Photo partagée avec tes amis! 🎉`);
+                this.showNotification(`Chia sẻ ảnh với bạn bè của bạn! 🎉`);
             }
 
             renderFeed() {
@@ -919,8 +919,8 @@
                     this.photoFeed.innerHTML = `
                         <div style="text-align: center; padding: 40px; opacity: 0.7; grid-column: 1 / -1;">
                             <div style="font-size: 3rem; margin-bottom: 15px;">📸</div>
-                            <div>Aucune photo pour le moment...</div>
-                            <div style="font-size: 0.9rem; margin-top: 10px;">Prends la première photo ou ajoute des amis!</div>
+                            <div>Chưa có ảnh nào...</div>
+                            <div style="font-size: 0.9rem; margin-top: 10px;">Chụp bức ảnh đầu tiên hoặc thêm bạn bè!</div>
                         </div>
                     `;
                     return;
@@ -932,7 +932,7 @@
                     
                     return `
                         <div class="photo-card">
-                            <img src="${photo.data}" alt="Photo de ${photo.author}">
+                            <img src="${photo.data}" alt="Ảnh của ${photo.author}">
                             <div class="photo-info">
                                 <div class="photo-author">${photo.author} ${isOwn ? '(Toi)' : ''}</div>
                                 <div class="photo-time">${timeAgo} • ❤️ ${photo.likes}</div>
