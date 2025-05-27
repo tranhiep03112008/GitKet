@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -193,10 +193,16 @@
             margin-bottom: 15px;
         }
 
+        #camera.mirror {
+            transform: scaleX(-1);
+        }
+
+
         #camera {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
         .camera-placeholder {
@@ -579,7 +585,7 @@
                 this.currentCamera = 'user';
                 this.isLogin = false;
                 this.currentTab = 'camera';
-                
+                this.isMirrored = false;
                 this.initializeElements();
                 this.setupEventListeners();
                 this.checkAuth();
@@ -857,18 +863,37 @@
                     this.switchCameraBtn.style.display = 'inline-block';
                     this.takePhotoBtn.style.display = 'inline-block';
                     
+                    // Tự động bật mirror cho camera trước
+                    this.updateMirrorEffect();
+
                 } catch (error) {
                     console.error('Lỗi máy ảnh:', lỗi);
                     this.showNotification('Không thể truy cập vào máy ảnh 😕', 'lỗi');
                 }
             }
-
+            
+            // Thêm method mới để cập nhật hiệu ứng mirror
+            updateMirrorEffect() {
+                if (this.currentCamera === 'user') {
+                    // Camera trước - bật mirror
+                    this.camera.classList.add('mirror');
+                    this.isMirrored = true;
+                } else {
+                    // Camera sau - tắt mirror
+                    this.camera.classList.remove('mirror');
+                    this.isMirrored = false;
+                }
+            }
+            // Cập nhật method switchCamera() - thay thế method hiện tại
             async switchCamera() {
                 this.currentCamera = this.currentCamera === 'Người dùng' ? 'Môi trường' : 'Người dùng';
                 await this.startCamera();
+
+                const cameraType = this.currentCamera === 'user' ? 'trước' : 'sau';
                 this.showNotification(`Camera ${this.currentCamera === 'Người dùng' ? 'Cam trước' : 'Cam sau'} Kích hoạt! 📱`);
             }
 
+            // Cập nhật method takePhoto() để xử lý mirror khi chụp
             takePhoto() {
                 if (!this.currentStream) {
                     this.showNotification('Trước tiên hãy kích hoạt camera! 📷', 'lỗi');
@@ -879,6 +904,12 @@
                 const context = canvas.getContext('2d');
                 canvas.width = this.camera.videoWidth;
                 canvas.height = this.camera.videoHeight;
+
+                // Nếu đang mirror (camera trước), flip lại khi save ảnh để có ảnh bình thường
+                if (this.isMirrored) {
+                    context.scale(-1, 1);
+                    context.translate(-canvas.width, 0);
+                }
                 
                 context.drawImage(this.camera, 0, 0);
                 const photoData = canvas.toDataURL('image/jpeg', 0.8);
