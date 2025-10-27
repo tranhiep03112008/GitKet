@@ -867,7 +867,7 @@
                     this.updateMirrorEffect();
 
                 } catch (error) {
-                    console.error('Lỗi máy ảnh:', lỗi);
+                    console.error('Lỗi máy ảnh:', error);
                     this.showNotification('Không thể truy cập vào máy ảnh 😕', 'lỗi');
                 }
             }
@@ -886,11 +886,10 @@
             }
             // Cập nhật method switchCamera() - thay thế method hiện tại
             async switchCamera() {
-                this.currentCamera = this.currentCamera === 'Người dùng' ? 'Môi trường' : 'Người dùng';
+                this.currentCamera = this.currentCamera === 'user' ? 'environment' : 'user';
                 await this.startCamera();
 
-                const cameraType = this.currentCamera === 'user' ? 'trước' : 'sau';
-                this.showNotification(`Camera ${this.currentCamera === 'Người dùng' ? 'Cam trước' : 'Cam sau'} Kích hoạt! 📱`);
+                this.showNotification(`Camera ${this.currentCamera === 'user' ? 'Cam trước' : 'Cam sau'} Kích hoạt! 📱`);
             }
 
             // Cập nhật method takePhoto() để xử lý mirror khi chụp
