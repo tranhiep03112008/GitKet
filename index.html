@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gitket - Partage tes moments</title>
+
+    <!-- Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         * {
             margin: 0;
@@ -197,7 +202,6 @@
             transform: scaleX(-1);
         }
 
-
         #camera {
             width: 100%;
             height: 100%;
@@ -210,20 +214,22 @@
             align-items: center;
             justify-content: center;
             height: 100%;
-            background: linear-gradient(45deg, #333, #555);
+            background: linear-gradient (45deg, #333, #555);
             color: white;
             font-size: 1.1rem;
             text-align: center;
         }
 
+        /* === NÚT CAMERA MỚI (iPhone Style + Hologram) === */
         .camera-controls {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 30px;
             margin-bottom: 15px;
         }
 
-        .btn {
+        /* Nút "Git" (bật camera) */
+        #start-camera {
             background: rgba(255,255,255,0.9);
             color: #333;
             border: none;
@@ -231,26 +237,74 @@
             border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
-        .btn:hover {
+        #start-camera:hover {
             background: white;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .btn-primary {
-            background: #ff6b6b;
+        /* Nút chuyển camera (icon quay) */
+        #switch-camera {
+            background: rgba(255,255,255,0.15);
+            border: none;
             color: white;
-            font-size: 1rem;
-            padding: 15px 30px;
+            font-size: 1.6rem;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .btn-primary:hover {
-            background: #ff5252;
+        #switch-camera:hover {
+            background: rgba(255,255,255,0.3);
         }
+
+        /* Nút chụp ảnh - Hologram */
+        #take-photo {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b, #86A8E7, #91EAE4);
+            background-size: 400% 400%;
+            animation: hologram 3s ease infinite;
+            border: none;
+            color: transparent;
+            font-size: 2.2rem;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+
+        #take-photo:hover {
+            transform: scale(1.07);
+        }
+
+        #take-photo:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes hologram {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Ẩn/hiện nút khi camera bật */
+        #switch-camera, #take-photo { display: none; }
+        .camera-active #start-camera { display: none; }
+        .camera-active #switch-camera,
+        .camera-active #take-photo { display: flex; }
 
         /* Friends Section */
         .friends-section {
@@ -448,6 +502,18 @@
             .add-friend-form {
                 flex-direction: column;
             }
+
+            #switch-camera {
+                width: 44px;
+                height: 44px;
+                font-size: 1.4rem;
+            }
+
+            #take-photo {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -455,8 +521,8 @@
     <!-- Auth Screen -->
     <div id="auth-screen" class="auth-screen">
         <div class="auth-card">
-            <div class="auth-logo">📸</div>
-            <div class="auth-title" id="auth-title">Tạo Tài Khoản Cho Bạn😘</div>
+            <div class="auth-logo">Camera</div>
+            <div class="auth-title" id="auth-title">Tạo Tài Khoản Cho Bạn</div>
             
             <form id="auth-form">
                 <div class="form-group">
@@ -470,7 +536,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Mật Khẩu😯</label>
+                    <label class="form-label">Mật Khẩu</label>
                     <input type="password" id="auth-password" class="form-input" required minlength="6">
                 </div>
                 
@@ -490,20 +556,20 @@
     <div id="main-app" class="container hidden">
         <div class="header">
             <div class="header-left">
-                <div class="logo">📸 Gitket</div>
+                <div class="logo">Gitket</div>
                 <div class="user-info">
                     <div id="current-user">Hello My Fen!</div>
                 </div>
             </div>
             <div class="header-right">
-                <button class="icon-btn" id="logout-btn" title="Déconnexion">🚪</button>
+                <button class="icon-btn" id="logout-btn" title="Déconnexion">Exit</button>
             </div>
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab active" data-tab="camera">📷 Camera</button>
-            <button class="nav-tab" data-tab="friends">👥 Bạn Boè</button>
-            <button class="nav-tab" data-tab="feed">📱 Đã Lưu</button>
+            <button class="nav-tab active" data-tab="camera">Camera</button>
+            <button class="nav-tab" data-tab="friends">Bạn Bè</button>
+            <button class="nav-tab" data-tab="feed">Đã Lưu</button>
         </div>
 
         <!-- Camera Tab -->
@@ -513,19 +579,21 @@
                     <video id="camera" style="display: none;" autoplay playsinline></video>
                     <div id="camera-placeholder" class="camera-placeholder">
                         <div>
-                            <div style="font-size: 3rem; margin-bottom: 10px;">📷</div>
-                            <div>Nhấp vào"Git" để chụp</div>
+                            <div style="font-size: 3rem; margin-bottom: 10px;">Camera</div>
+                            <div>Nhấp vào "Git" để chụp</div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- NÚT ĐÃ ĐƯỢC THAY ĐỔI -->
                 <div class="camera-controls">
-                    <button id="start-camera" class="btn">Git</button>
-                    <button id="switch-camera" class="btn" style="display: none;">Trở lại</button>
-                </div>
-                
-                <div style="text-align: center;">
-                    <button id="take-photo" class="btn btn-primary" style="display: none;">Chụp ảnh</button>
+                    <button id="start-camera">Git</button>
+                    <button id="switch-camera">
+                        <i class="fa-solid fa-camera-rotate"></i>
+                    </button>
+                    <button id="take-photo">
+                        <i class="fa-solid fa-circle"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -533,7 +601,7 @@
         <!-- Friends Tab -->
         <div id="tab-friends" class="tab-content hidden">
             <div class="friends-section">
-                <div class="section-title">👥 Bạn Bè</div>
+                <div class="section-title">Bạn Bè</div>
                 
                 <div class="add-friend-form">
                     <input type="text" id="add-friend-input" class="add-friend-input" placeholder="Tên người dùng...">
@@ -549,7 +617,7 @@
         <!-- Feed Tab -->
         <div id="tab-feed" class="tab-content hidden">
             <div class="feed-section">
-                <div class="section-title">📱 Lịch sử của bạn</div>
+                <div class="section-title">Lịch sử của bạn</div>
                 <div id="photo-feed" class="photo-grid">
                     <!-- Les photos apparaîtront ici -->
                 </div>
@@ -592,7 +660,6 @@
             }
 
             initializeElements() {
-                // Auth elements
                 this.authScreen = document.getElementById('auth-screen');
                 this.mainApp = document.getElementById('main-app');
                 this.authForm = document.getElementById('auth-form');
@@ -604,7 +671,6 @@
                 this.authEmail = document.getElementById('auth-email');
                 this.authPassword = document.getElementById('auth-password');
 
-                // Main app elements
                 this.currentUserEl = document.getElementById('current-user');
                 this.logoutBtn = document.getElementById('logout-btn');
                 this.camera = document.getElementById('camera');
@@ -618,28 +684,23 @@
                 this.addFriendBtn = document.getElementById('add-friend-btn');
                 this.friendsList = document.getElementById('friends-list');
 
-                // Navigation
                 this.navTabs = document.querySelectorAll('.nav-tab');
                 this.tabContents = document.querySelectorAll('.tab-content');
             }
 
             setupEventListeners() {
-                // Auth
                 this.authForm.addEventListener('submit', (e) => this.handleAuth(e));
                 this.authToggleBtn.addEventListener('click', () => this.toggleAuthMode());
                 this.logoutBtn.addEventListener('click', () => this.logout());
 
-                // Navigation
                 this.navTabs.forEach(tab => {
                     tab.addEventListener('click', () => this.switchTab(tab.dataset.tab));
                 });
 
-                // Camera
                 this.startCameraBtn.addEventListener('click', () => this.startCamera());
                 this.switchCameraBtn.addEventListener('click', () => this.switchCamera());
                 this.takePhotoBtn.addEventListener('click', () => this.takePhoto());
 
-                // Friends
                 this.addFriendBtn.addEventListener('click', () => this.addFriend());
                 this.addFriendInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') this.addFriend();
@@ -682,20 +743,18 @@
                 const password = this.authPassword.value;
 
                 if (this.isLogin) {
-                    // Login
                     const user = this.users[username];
                     if (user && user.password === password) {
                         this.currentUser = { username: user.username, email: user.email };
                         localStorage.setItem('locket-current-user', JSON.stringify(this.currentUser));
                         this.showMainApp();
-                        this.showNotification(`Chào mừng ${username}! 👋`);
+                        this.showNotification(`Chào mừng ${username}!`);
                     } else {
-                        this.showNotification('Tên người dùng hoặc mật khẩu không đúng 😕', 'lỗi');
+                        this.showNotification('Tên người dùng hoặc mật khẩu không đúng', 'lỗi');
                     }
                 } else {
-                    // Register
                     if (this.users[username]) {
-                        this.showNotification('Tên người dùng này đã tồn tại 😕', 'lỗi');
+                        this.showNotification('Tên người dùng này đã tồn tại', 'lỗi');
                         return;
                     }
 
@@ -705,14 +764,13 @@
                     this.currentUser = { username, email };
                     localStorage.setItem('locket-current-user', JSON.stringify(this.currentUser));
                     
-                    // Initialiser la liste d'amis pour ce nouvel utilisateur
                     if (!this.friends[username]) {
                         this.friends[username] = [];
                         localStorage.setItem('locket-friends', JSON.stringify(this.friends));
                     }
                     
                     this.showMainApp();
-                    this.showNotification(`Tài khoản đã được tạo thành công! Chào mừng ${username}! 🎉`);
+                    this.showNotification(`Tài khoản đã được tạo thành công! Chào mừng ${username}!`);
                 }
             }
 
@@ -723,7 +781,7 @@
                     this.currentStream.getTracks().forEach(track => track.stop());
                 }
                 this.showAuthScreen();
-                this.showNotification('Hẹn gặp lại! 👋');
+                this.showNotification('Hẹn gặp lại!');
             }
 
             showAuthScreen() {
@@ -743,13 +801,9 @@
 
             switchTab(tabName) {
                 this.currentTab = tabName;
-                
-                // Update navigation
                 this.navTabs.forEach(tab => {
                     tab.classList.toggle('active', tab.dataset.tab === tabName);
                 });
-                
-                // Update content
                 this.tabContents.forEach(content => {
                     content.classList.toggle('hidden', !content.id.includes(tabName));
                 });
@@ -757,83 +811,52 @@
 
             addFriend() {
                 const friendUsername = this.addFriendInput.value.trim();
-                
-                if (!friendUsername) {
-                    this.showNotification('Nhập tên người dùng của bạn 😊', 'lỗi');
-                    return;
-                }
-                
-                if (friendUsername === this.currentUser.username) {
-                    this.showNotification('Bạn không thể thêm chính mình 😄', 'lỗi');
-                    return;
-                }
-                
-                if (!this.users[friendUsername]) {
-                    this.showNotification('Người dùng này không tồn tại 😕', 'lỗi');
-                    return;
-                }
-                
-                if (!this.friends[this.currentUser.username]) {
-                    this.friends[this.currentUser.username] = [];
-                }
-                
-                if (this.friends[this.currentUser.username].includes(friendUsername)) {
-                    this.showNotification('Bạn đã là bạn với người này rồi! 😊', 'lỗi');
-                    return;
-                }
-                
+                if (!friendUsername) return this.showNotification('Nhập tên người dùng', 'lỗi');
+                if (friendUsername === this.currentUser.username) return this.showNotification('Không thể thêm chính mình', 'lỗi');
+                if (!this.users[friendUsername]) return this.showNotification('Người dùng không tồn tại', 'lỗi');
+                if (!this.friends[this.currentUser.username]) this.friends[this.currentUser.username] = [];
+                if (this.friends[this.currentUser.username].includes(friendUsername)) return this.showNotification('Đã là bạn bè', 'lỗi');
+
                 this.friends[this.currentUser.username].push(friendUsername);
                 localStorage.setItem('locket-friends', JSON.stringify(this.friends));
-                
                 this.addFriendInput.value = '';
                 this.renderFriends();
                 this.updateStats();
-                this.showNotification(`${friendUsername} Đã thêm vào danh sách bạn bè của bạn! 🎉`);
+                this.showNotification(`${friendUsername} đã được thêm!`);
             }
 
             removeFriend(friendUsername) {
                 if (this.friends[this.currentUser.username]) {
-                    this.friends[this.currentUser.username] = this.friends[this.currentUser.username]
-                        .filter(friend => friend !== friendUsername);
+                    this.friends[this.currentUser.username] = this.friends[this.currentUser.username].filter(f => f !== friendUsername);
                     localStorage.setItem('locket-friends', JSON.stringify(this.friends));
                     this.renderFriends();
                     this.updateStats();
-                    this.showNotification(`${friendUsername} Đã xóa khỏi bạn bè của bạn 👋`);
+                    this.showNotification(`${friendUsername} đã bị xóa`);
                 }
             }
 
             renderFriends() {
                 const userFriends = this.friends[this.currentUser.username] || [];
-                
                 if (userFriends.length === 0) {
-                    this.friendsList.innerHTML = `
-                        <div style="text-align: center; padding: 40px; opacity: 0.7;">
-                            <div style="font-size: 3rem; margin-bottom: 15px;">👥</div>
-                            <div>Chưa có bạn bè...</div>
-                            <div style="font-size: 0.9rem; margin-top: 10px;">Thêm những người bạn đầu tiên của bạn!</div>
-                        </div>
-                    `;
+                    this.friendsList.innerHTML = `<div style="text-align: center; padding: 40px; opacity: 0.7;"><div style="font-size: 3rem; margin-bottom: 15px;">Friends</div><div>Chưa có bạn bè...</div></div>`;
                     return;
                 }
 
                 this.friendsList.innerHTML = userFriends.map(friend => {
                     const user = this.users[friend];
                     const avatar = friend.charAt(0).toUpperCase();
-                    
                     return `
                         <div class="friend-item">
                             <div class="friend-info">
                                 <div class="friend-avatar">${avatar}</div>
                                 <div>
                                     <div style="font-weight: 600;">${friend}</div>
-                                    <div style="font-size: 0.8rem; opacity: 0.7;">${user ? user.email : 'Email không có sẵn'}</div>
+                                    <div style="font-size: 0.8rem; opacity: 0.7;">${user ? user.email : 'Email không có'}</div>
                                 </div>
                                 <div class="friend-status"></div>
                             </div>
                             <div class="friend-actions">
-                                <button class="btn btn-small btn-danger" onclick="app.removeFriend('${friend}')">
-                                    Retirer
-                                </button>
+                                <button class="btn btn-small btn-danger" onclick="app.removeFriend('${friend}')">Xóa</button>
                             </div>
                         </div>
                     `;
@@ -843,7 +866,7 @@
             async startCamera() {
                 try {
                     if (this.currentStream) {
-                        this.currentStream.getTracks().forEach(track => track.stop());
+                        this.currentStream.getTracks().forEach(t => t.stop());
                     }
 
                     const constraints = {
@@ -856,61 +879,54 @@
 
                     this.currentStream = await navigator.mediaDevices.getUserMedia(constraints);
                     this.camera.srcObject = this.currentStream;
-                    
+
                     this.camera.style.display = 'block';
                     this.cameraPlaceholder.style.display = 'none';
-                    this.startCameraBtn.style.display = 'none';
-                    this.switchCameraBtn.style.display = 'inline-block';
-                    this.takePhotoBtn.style.display = 'inline-block';
-                    
-                    // Tự động bật mirror cho camera trước
+
+                    // Kích hoạt trạng thái camera-active
+                    document.querySelector('.camera-section').classList.add('camera-active');
+
                     this.updateMirrorEffect();
 
                 } catch (error) {
-                    console.error('Lỗi máy ảnh:', error);
-                    this.showNotification('Không thể truy cập vào máy ảnh 😕', 'lỗi');
+                    console.error('Lỗi camera:', error);
+                    this.showNotification('Không thể truy cập camera', 'lỗi');
                 }
             }
-            
-            // Thêm method mới để cập nhật hiệu ứng mirror
+
             updateMirrorEffect() {
                 if (this.currentCamera === 'user') {
-                    // Camera trước - bật mirror
                     this.camera.classList.add('mirror');
                     this.isMirrored = true;
                 } else {
-                    // Camera sau - tắt mirror
                     this.camera.classList.remove('mirror');
                     this.isMirrored = false;
                 }
             }
-            // Cập nhật method switchCamera() - thay thế method hiện tại
+
             async switchCamera() {
                 this.currentCamera = this.currentCamera === 'user' ? 'environment' : 'user';
                 await this.startCamera();
-
-                this.showNotification(`Camera ${this.currentCamera === 'user' ? 'Cam trước' : 'Cam sau'} Kích hoạt! 📱`);
+                this.showNotification(`Đã chuyển sang camera ${this.currentCamera === 'user' ? 'trước' : 'sau'}`);
             }
 
-            // Cập nhật method takePhoto() để xử lý mirror khi chụp
             takePhoto() {
                 if (!this.currentStream) {
-                    this.showNotification('Trước tiên hãy kích hoạt camera! 📷', 'lỗi');
+                    this.showNotification('Hãy bật camera trước!', 'lỗi');
                     return;
                 }
 
                 const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
+                const ctx = canvas.getContext('2d');
                 canvas.width = this.camera.videoWidth;
                 canvas.height = this.camera.videoHeight;
 
-                // Nếu đang mirror (camera trước), flip lại khi save ảnh để có ảnh bình thường
                 if (this.isMirrored) {
-                    context.scale(-1, 1);
-                    context.translate(-canvas.width, 0);
+                    ctx.scale(-1, 1);
+                    ctx.translate(-canvas.width, 0);
                 }
-                
-                context.drawImage(this.camera, 0, 0);
+
+                ctx.drawImage(this.camera, 0, 0);
                 const photoData = canvas.toDataURL('image/jpeg', 0.8);
 
                 const photo = {
@@ -923,49 +939,35 @@
                 };
 
                 this.photos.unshift(photo);
-                
-                // Garder seulement les 100 dernières photos
-                if (this.photos.length > 100) {
-                    this.photos = this.photos.slice(0, 100);
-                }
-                
+                if (this.photos.length > 100) this.photos = this.photos.slice(0, 100);
                 localStorage.setItem('locket-photos', JSON.stringify(this.photos));
                 
                 this.renderFeed();
                 this.updateStats();
-                this.showNotification(`Chia sẻ ảnh với bạn bè của bạn! 🎉`);
+                this.showNotification('Đã chụp ảnh!');
             }
 
             renderFeed() {
                 const userFriends = this.friends[this.currentUser.username] || [];
-                
-                // Filtrer les photos visibles: photos de l'utilisateur ou photos de ses amis
                 const visiblePhotos = this.photos.filter(photo => {
                     return photo.author === this.currentUser.username || 
                            (userFriends.includes(photo.author) && photo.visibleTo.includes(this.currentUser.username));
                 });
-                
+
                 if (visiblePhotos.length === 0) {
-                    this.photoFeed.innerHTML = `
-                        <div style="text-align: center; padding: 40px; opacity: 0.7; grid-column: 1 / -1;">
-                            <div style="font-size: 3rem; margin-bottom: 15px;">📸</div>
-                            <div>Chưa có ảnh nào...</div>
-                            <div style="font-size: 0.9rem; margin-top: 10px;">Chụp bức ảnh đầu tiên hoặc thêm bạn bè!</div>
-                        </div>
-                    `;
+                    this.photoFeed.innerHTML = `<div style="text-align: center; padding: 40px; opacity: 0.7; grid-column: 1 / -1;"><div style="font-size: 3rem; margin-bottom: 15px;">Camera</div><div>Chưa có ảnh...</div></div>`;
                     return;
                 }
 
                 this.photoFeed.innerHTML = visiblePhotos.map(photo => {
                     const timeAgo = this.getTimeAgo(new Date(photo.timestamp));
                     const isOwn = photo.author === this.currentUser.username;
-                    
                     return `
                         <div class="photo-card">
                             <img src="${photo.data}" alt="Ảnh của ${photo.author}">
                             <div class="photo-info">
-                                <div class="photo-author">${photo.author} ${isOwn ? '(Toi)' : ''}</div>
-                                <div class="photo-time">${timeAgo} • ❤️ ${photo.likes}</div>
+                                <div class="photo-author">${photo.author} ${isOwn ? '(Bạn)' : ''}</div>
+                                <div class="photo-time">${timeAgo} • Heart ${photo.likes}</div>
                             </div>
                         </div>
                     `;
@@ -974,12 +976,9 @@
 
             updateStats() {
                 const userFriends = this.friends[this.currentUser.username] || [];
-                const userPhotos = this.photos.filter(photo => photo.author === this.currentUser.username);
-                
+                const userPhotos = this.photos.filter(p => p.author === this.currentUser.username);
                 const today = new Date().toDateString();
-                const todayPhotos = userPhotos.filter(p => 
-                    new Date(p.timestamp).toDateString() === today
-                ).length;
+                const todayPhotos = userPhotos.filter(p => new Date(p.timestamp).toDateString() === today).length;
 
                 document.getElementById('total-photos').textContent = userPhotos.length;
                 document.getElementById('friend-count').textContent = userFriends.length;
@@ -987,83 +986,46 @@
             }
 
             getTimeAgo(date) {
-                const now = new Date();
-                const diff = now - date;
+                const diff = Date.now() - date;
                 const minutes = Math.floor(diff / 60000);
                 const hours = Math.floor(diff / 3600000);
                 const days = Math.floor(diff / 86400000);
-
-                if (minutes < 1) return 'À l\'instant';
-                if (minutes < 60) return `${minutes}min`;
+                if (minutes < 1) return 'Vừa xong';
+                if (minutes < 60) return `${minutes}p`;
                 if (hours < 24) return `${hours}h`;
-                return `${days}j`;
+                return `${days}ng`;
             }
 
             showNotification(message, type = 'success') {
                 this.notification.textContent = message;
-                this.notification.className = `notification ${type === 'error' ? 'error' : ''}`;
-                if (type === 'error') {
-                    this.notification.style.background = '#f44336';
-                } else {
-                    this.notification.style.background = '#4CAF50';
-                }
-                
+                this.notification.style.background = type === 'lỗi' ? '#f44336' : '#4CAF50';
                 this.notification.classList.add('show');
-                
-                setTimeout(() => {
-                    this.notification.classList.remove('show');
-                }, 3000);
+                setTimeout(() => this.notification.classList.remove('show'), 3000);
             }
 
             generateSampleData() {
-                // Créer quelques utilisateurs d'exemple s'ils n'existent pas
                 if (Object.keys(this.users).length <= 1) {
                     const sampleUsers = [
                         { username: 'Sarah', email: 'sarah@example.com', password: '123456' },
                         { username: 'Alex', email: 'alex@example.com', password: '123456' },
                         { username: 'Marie', email: 'marie@example.com', password: '123456' }
                     ];
-
-                    sampleUsers.forEach(user => {
-                        if (!this.users[user.username]) {
-                            this.users[user.username] = user;
-                            this.friends[user.username] = [];
+                    sampleUsers.forEach(u => {
+                        if (!this.users[u.username]) {
+                            this.users[u.username] = u;
+                            this.friends[u.username] = [];
                         }
                     });
-
                     localStorage.setItem('locket-users', JSON.stringify(this.users));
                     localStorage.setItem('locket-friends', JSON.stringify(this.friends));
                 }
 
-                // Ajouter quelques photos d'exemple si c'est vide
                 if (this.photos.length === 0) {
                     const samplePhotos = [
-                        {
-                            id: Date.now() - 3600000,
-                            data: this.createSampleImage('🌅', '#ff9a9e'),
-                            author: 'Sarah',
-                            timestamp: new Date(Date.now() - 3600000).toISOString(),
-                            likes: 12,
-                            visibleTo: ['Alex', 'Marie']
-                        },
-                        {
-                            id: Date.now() - 7200000,
-                            data: this.createSampleImage('☕', '#a8e6cf'),
-                            author: 'Alex',
-                            timestamp: new Date(Date.now() - 7200000).toISOString(),
-                            likes: 8,
-                            visibleTo: ['Sarah', 'Marie']
-                        },
-                        {
-                            id: Date.now() - 10800000,
-                            data: this.createSampleImage('🎨', '#ffd3a5'),
-                            author: 'Marie',
-                            timestamp: new Date(Date.now() - 10800000).toISOString(),
-                            likes: 15,
-                            visibleTo: ['Sarah', 'Alex']
-                        }
+                        { id: Date.now() - 3600000, data: this.createSampleImage('Sunset', '#ff9a9e'), author: 'Sarah', timestamp: new Date(Date.now() - 3600000).toISOString(), likes: 12, visibleTo: ['Alex', 'Marie'] },
+                        { id: Date.now() - 7200000, data: this.createSampleImage('Coffee', '#a8e6cf'), author: 'Alex', timestamp: new Date(Date.now() - 7200000).toISOString(), likes: 8, visibleTo: ['Sarah', 'Marie'] },
+                        { id: Date.now() - 10800000, data: this.createSampleImage('Art', '#ffd3a5'), author: 'Marie', timestamp: new Date(Date.now() - 10800000).toISOString(), likes: 15, visibleTo: ['Sarah', 'Alex'] }
                     ];
-
                     this.photos = samplePhotos;
                     localStorage.setItem('locket-photos', JSON.stringify(this.photos));
                 }
@@ -1071,27 +1033,16 @@
 
             createSampleImage(emoji, color) {
                 const canvas = document.createElement('canvas');
-                canvas.width = 300;
-                canvas.height = 200;
+                canvas.width = 300; canvas.height = 200;
                 const ctx = canvas.getContext('2d');
-                
-                // Gradient background
                 const gradient = ctx.createLinearGradient(0, 0, 300, 200);
-                gradient.addColorStop(0, color);
-                gradient.addColorStop(1, color + '80');
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, 300, 200);
-                
-                // Emoji
-                ctx.font = '60px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText(emoji, 150, 120);
-                
+                gradient.addColorStop(0, color); gradient.addColorStop(1, color + '80');
+                ctx.fillStyle = gradient; ctx.fillRect(0, 0, 300, 200);
+                ctx.font = '60px Arial'; ctx.textAlign = 'center'; ctx.fillText(emoji, 150, 120);
                 return canvas.toDataURL('image/jpeg', 0.8);
             }
         }
 
-        // Initialiser l'app quand la page est chargée
         let app;
         document.addEventListener('DOMContentLoaded', () => {
             app = new LocketApp();
